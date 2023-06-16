@@ -2,29 +2,42 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const ZipAPI = (props) => {
-  const [pokeListState, setPokeListState] = useState([]);
-  // pokeList  === this.state.pokeList
-  // setPokeList === this.state.pokeList
+  const [zips, setZips] = useState({});
+
+  console.log(zips);
 
   useEffect(() => {
-    async function fetchPokemon() {
+    async function getZips() {
       try {
-        const list = await axios.get("https://pokeapi.co/api/v2/pokemon");
-        setPokeListState(list.data.results);
-        // this.setState(list.data.results)
+        const URL = `https://zip-api.eu/api/v1/info/${zips}`;
+        const response = await axios.get(URL);
+        setZips(response.data);
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     }
-    fetchPokemon();
-  }, []);
-  console.log(props);
+    getZips();
+  }, [zips]);
+  console.log(zips);
   return (
     <div>
       <h1>{props.title}</h1>
-      {pokeListState.map((pokemon) => {
-        return <p key={pokemon.url}>{pokemon.name}</p>;
-      })}
+      <form>
+        <input
+          value={zips}
+          placeholder="Enter Zipcode"
+          onChange={(e) => setZips(e.target.value)}
+        ></input>
+        <button>Search</button>
+      </form>
+      <div>
+        <p>Country: {zips.country_code}</p>
+        <p>Postal Code: {zips.postal_code}</p>
+        <p>State: {zips.state}</p>
+        <p>Place Name: {zips.place_name}</p>
+        <p>Latitude: {zips.lat}</p>
+        <p>Longitude: {zips.lng}</p>
+      </div>
     </div>
   );
 };
