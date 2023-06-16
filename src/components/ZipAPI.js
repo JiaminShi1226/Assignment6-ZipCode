@@ -25,6 +25,7 @@ const ZipAPI = (props) => {
   return (
     <div>
       <h1>{props.title}</h1>
+      <h4>Searching Rule: [country_code]-[postal_code] or [lat],[lon]</h4>
       <form>
         <input
           placeholder="Enter Zipcode"

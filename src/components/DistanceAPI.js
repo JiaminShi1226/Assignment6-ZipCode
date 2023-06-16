@@ -25,6 +25,7 @@ const DistanceAPI = (props) => {
   return (
     <div>
       <h1>{props.title}</h1>
+      <h4>Searching Rule: type [postal_code] for both input box</h4>
       <form>
         <input
           placeholder="Enter Zipcode"
@@ -37,7 +38,7 @@ const DistanceAPI = (props) => {
         <button onClick={handleSubmit}>Search</button>
       </form>
       <div>
-        <p>Distance: {Number(distancee).toFixed(2)} mi </p> 
+        <p>Distance: {Number(distancee).toFixed(2)} mi </p>
       </div>
     </div>
   );
