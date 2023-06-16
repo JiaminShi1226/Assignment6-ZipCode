@@ -1,34 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 const ZipAPI = (props) => {
-  const [zips, setZips] = useState({});
+  const [zips, setZips] = useState("");
+  const [vals, setVals] = useState("");
 
   console.log(zips);
 
-  useEffect(() => {
-    async function getZips() {
-      try {
-        const URL = `https://zip-api.eu/api/v1/info/${zips}`;
-        const response = await axios.get(URL);
-        setZips(response.data);
-      } catch (error) {
-        console.log(error);
-      }
+  async function getZips() {
+    try {
+      const URL = `https://zip-api.eu/api/v1/info/${vals}`;
+      const response = await axios.get(URL);
+      setZips(response.data);
+    } catch (error) {
+      console.log(error);
     }
-    getZips();
-  }, [zips]);
+  }
+
   console.log(zips);
+  const handleSubmit = (event) => {
+    getZips(vals);
+    event.preventDefault();
+  };
   return (
     <div>
       <h1>{props.title}</h1>
       <form>
         <input
-          value={zips}
           placeholder="Enter Zipcode"
-          onChange={(e) => setZips(e.target.value)}
+          onChange={(e) => setVals(e.target.value)}
         ></input>
-        <button>Search</button>
+        <button onClick={handleSubmit}>Search</button>
       </form>
       <div>
         <p>Country: {zips.country_code}</p>
